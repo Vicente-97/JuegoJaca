@@ -13,7 +13,33 @@ public class Juego {
 	private int jugadorJuega;
 	private int dado; // Dado para ver los movimientos del jugador que juega
 
+	
+	
+	/**
+	 * Método que sirve para crear rocas, como limite tiene la constante NUM_ROCAS.
+	 * Creamos una coordenada y un Elemento tipo Roca, comprobamos en el mapa (tablero)
+	 * que el valor de la keyset es null, para así tener espacio para crear la roca.
+	 * le insertamos al tablero, la coordenada y el elemento, que en este caso será roca y aumentamos el numero.
+	 */
+	private void crearRocas() {
+		
+		int numero = 0;
+		
+		while (numero < Constantes.NUM_ROCAS) {
+			
+			Coordenada coordenada = new Coordenada();
+			
+			Element elemento = new Element(ElementType.ROCA);
+			
+			if (tablero.get(coordenada) == null) {
+				
+				this.tablero.put(coordenada, elemento);
+				
+				numero++;
+			}
 
+		}
+	}
 	/**
 	 * Escribe el tablero en formato no grÃ¡fico. Devuelve el string con la
 	 * informaciÃ³n
@@ -155,5 +181,6 @@ public class Juego {
 		return resul;
 	}
 
+	
 	
 }

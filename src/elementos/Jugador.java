@@ -120,5 +120,88 @@ public class Jugador extends Element {
 		this.gemas++;
 	}
 	
+	//metodo para luchar entre dos jugadores//
+	
+	/**
+	 * Método que se lleva a cabo entre dos jugadores que se encuentre.
+	 * si la fuerza es igual, quedaria en empate.
+	 * si el jugador uno le gana en fuerza al jugador contrario, el contrario puede:
+	 * -usar pocion 
+	 * -perder su dinero.
+	 * si por el contrario el jugador contrario gana al jugador principal, este perderá una pocion si tiene
+	 * y su dinero.
+	 * 
+	 * 
+	 * @param jugadorContrario
+	 * @return
+	 */
+	public int lucha(Jugador jugadorContrario) {
+		int resultadoFinal=0;
+		int fuerzaDelJugador= this.getFuerzaParaLuchar();
+		int fuerzaDelJugadorContrario= jugadorContrario.getFuerzaParaLuchar();
+		
+		//Supuestos en los que nosotros ganariamos superando la fuerza del contrario//
+		if(fuerzaDelJugador==fuerzaDelJugadorContrario) {
+			resultadoFinal= Constantes.EMPATE;
+		}else if (fuerzaDelJugador> fuerzaDelJugadorContrario) {
+			if(jugadorContrario.getPociones()>0) {
+				jugadorContrario.pociones--;
+				resultadoFinal = Constantes.GANA_USA_POCIMA;
+			}else if ( jugadorContrario.getDinero()>0) {
+				
+				this.dinero+=jugadorContrario.dinero;
+				jugadorContrario.dinero=0;
+				resultadoFinal=Constantes.GANA_DINERO;//gana el dinero del contrario y gana el jugador//
+				
+			}
+			//supuestos de casos en los que nosotros perderiamos.
+		}else {
+			
+				if(pociones>0) {
+					pociones --;
+					resultadoFinal=Constantes.PIERDE_USA_POCIMA;
+				} else if (dinero>0) {
+					jugadorContrario.dinero+= this.getDinero();//el jugador contrario se queda nuestro dinero
+					this.dinero=0; //reseteamos nuestro dinero a 0.
+					resultadoFinal= Constantes.PIERDE_DINERO;//gana el enemigo y nos quita nustro dinero
+				}else {
+					resultadoFinal=Constantes.PIERDE_MUERE;//Supuesto en el que morimos
+				}
+		}	
+			
+		
+		return resultadoFinal;
+	}
+	
+	/**
+	 * metodo que define el encuentro de una roca en nuestro camino.
+	 * si tenemos gemas podemos romper la roca, y perderiamos una gema.
+	 * si tenemos magia superior a 4, romperemos el obstaculo, si no, perderemos y no 
+	 * permitirá el paso.
+	 * 
+	 * @return
+	 */
+	public int encuentraRoca() {
+		int resultadoFinal=0;
+		
+		if (this.gemas>0) {
+			resultadoFinal=Constantes.ROMPE_ROCA_CON_GEMA;
+			
+			this.gemas--;
+		}else {
+			if (this.getMagia()>4) {
+				
+				resultadoFinal=Constantes.GANA_A_LA_ROCA;
+				
+			}else {
+				resultadoFinal=Constantes.PIERDE_A_LA_ROCA;
+			}
+		
+		}
+		return resultadoFinal;
+	}
 	
 }
+	
+	
+	
