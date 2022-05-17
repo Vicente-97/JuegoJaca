@@ -11,9 +11,64 @@ public class Juego {
 	private HashMap<Coordenada, Element> tablero;
 	private ArrayList<Coordenada> coordenadaJugadores;
 	private int jugadorJuega;
-	private int dado; // Dado para ver los movimientos del jugador que juega
-
+	private int dado; // Dado para ver los movimientos del jugador que juega.
+	private int numeroRocas;
+	private int numeroGemas;
+	private int numeroPociones;
+	private int numeroDinero;
 	
+	/**
+	 * Constructor Que crea un tablero y añade los jugadores en base a la constante, llamando al metodo crearJugadores.
+	 * @param personaje
+	 */
+	public Juego(PlayerType[] personaje) {
+		super();
+		tablero = new HashMap<>();
+		coordenadaJugadores= new ArrayList<>();
+		crearTablero();
+		for(int i =0; i<Constantes.NUM_JUGADORES; i++) {
+			crearJugadores(personaje[i]);
+		}
+	}
+	/**
+	 * Creo el tablero con los metodos creardinero, creargemas, crearpociones, crearrocas.
+	 * Todos los elementos menos los jugadores
+	 */
+	private void crearTablero() {
+		crearDinero();
+		crearGemas();
+		crearPociones();
+		crearRocas();
+	}
+	
+	/**
+	 * metodo para crear jugadores, devuelve un boolean y crea un jugador y una coordenada,
+	 * Si la coordenada es nula, le añado la coordenada al tablero y el jugador.
+	 * 
+	 */
+	
+	private boolean crearJugadores(PlayerType tipoDeJugador) {
+		
+			 boolean sePuedeCrear=false;
+			
+			Jugador jugador = new Jugador(tipoDeJugador);
+			Coordenada coordenada = new Coordenada();
+			
+			
+			while(coordenadaJugadores.contains(coordenada)) {
+				coordenada = new Coordenada();		
+									
+				}								
+			if(this.tablero.get(coordenada)==null) {
+				coordenadaJugadores.add(coordenada);
+				tablero.put(coordenada, jugador);
+								
+				sePuedeCrear=true;
+			}
+				
+		return sePuedeCrear;
+		
+		}
 	
 	/**
 	 * Método que sirve para crear rocas, como limite tiene la constante NUM_ROCAS.
@@ -21,11 +76,9 @@ public class Juego {
 	 * que el valor de la keyset es null, para así tener espacio para crear la roca.
 	 * le insertamos al tablero, la coordenada y el elemento, que en este caso será roca y aumentamos el numero.
 	 */
-	private void crearRocas() {
+	private void crearRocas() {	
 		
-		int numero = 0;
-		
-		while (numero < Constantes.NUM_ROCAS) {
+		while (numeroRocas < Constantes.NUM_ROCAS) {
 			
 			Coordenada coordenada = new Coordenada();
 			
@@ -35,11 +88,71 @@ public class Juego {
 				
 				this.tablero.put(coordenada, elemento);
 				
-				numero++;
+				numeroRocas++;
 			}
 
 		}
 	}
+	
+	/**
+	 * Metodo que sirve para crear gemas con el limite de la constante NUM GEMA.
+	 * crea tipos de elemento GEMA, se crea una coordenada generada aleatoria, y se comprueba que el valor de esa
+	 * coordenada en el tablero esta vacia, osea es null, si es null pues en dicha casilla le inserta el elemento.
+	 */
+	private void crearGemas () {
+		
+		
+		while (numeroGemas< Constantes.NUM_GEMAS) {
+			Coordenada coordenada  = new Coordenada();
+			Element elemento = new Element(ElementType.GEMA);
+			
+			if( tablero.get(coordenada) == null ) {
+				this.tablero.put(coordenada, elemento);
+				numeroGemas ++;
+			}
+		}
+	}
+	/**
+	 * Metodo que sirve para crear Pociones con el limite de la constante NUM POCIONES.
+	 * crea tipos de elemento POCION, se crea una coordenada generada aleatoria, y se comprueba que el valor de esa
+	 * coordenada en el tablero esta vacia, osea es null, si es null pues en dicha casilla le inserta el elemento.
+	 */
+	private void crearPociones () {
+	
+		
+		
+		while (numeroPociones< Constantes.NUM_POCIONES) {
+			Coordenada coordenada  = new Coordenada();
+			Element elemento = new Element(ElementType.POCION);
+			
+			if( tablero.get(coordenada) == null ) {
+				this.tablero.put(coordenada, elemento);
+				numeroPociones ++;
+			}
+		}
+	}
+	/**
+	 * Metodo que sirve para crear gemas con el limite de la constante NUM DINERO.
+	 * crea tipos de elemento DINERO, se crea una coordenada generada aleatoria, y se comprueba que el valor de esa
+	 * coordenada en el tablero esta vacia, osea es null, si es null pues en dicha casilla le inserta el elemento.
+	 */
+	
+	private void crearDinero () {
+				
+		
+		while (numeroDinero< Constantes.NUM_DINERO) {
+			Coordenada coordenada  = new Coordenada();
+			Element elemento = new Element(ElementType.DINERO);
+			
+			if( tablero.get(coordenada) == null ) {
+				this.tablero.put(coordenada, elemento);
+				numeroDinero ++;
+			}
+		}
+	}
+	
+	
+	
 	/**
 	 * Escribe el tablero en formato no grÃ¡fico. Devuelve el string con la
 	 * informaciÃ³n
