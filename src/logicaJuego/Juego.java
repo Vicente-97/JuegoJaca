@@ -26,9 +26,18 @@ public class Juego {
 		tablero = new HashMap<>();
 		coordenadaJugadores= new ArrayList<>();
 		crearTablero();
-		for(int i =0; i<Constantes.NUM_JUGADORES; i++) {
-			crearJugadores(personaje[i]);
+		 Integer contador=0;
+		while(contador<Constantes.NUM_JUGADORES) {
+			if(crearJugador(personaje[contador])==true) {
+				contador++;
+			}		
+			
 		}
+		
+		//duda//
+		/*for(int i =0; i<Constantes.NUM_JUGADORES; i++) {
+			crearJugadores(personaje[i]);
+		}*/
 	}
 	/**
 	 * Creo el tablero con los metodos creardinero, creargemas, crearpociones, crearrocas.
@@ -47,28 +56,28 @@ public class Juego {
 	 * 
 	 */
 	
-	private boolean crearJugadores(PlayerType tipoDeJugador) {
+	private boolean crearJugador(PlayerType tipoDeJugador) {
 		
 			 boolean sePuedeCrear=false;
 			
 			Jugador jugador = new Jugador(tipoDeJugador);
 			Coordenada coordenada = new Coordenada();
 			
-			
-			while(coordenadaJugadores.contains(coordenada)) {
+			while (coordenadaJugadores.contains(coordenada)) {
 				coordenada = new Coordenada();		
-									
-				}								
+				
+			}
 			if(this.tablero.get(coordenada)==null) {
 				coordenadaJugadores.add(coordenada);
 				tablero.put(coordenada, jugador);
-								
 				sePuedeCrear=true;
 			}
+			return sePuedeCrear;
+	}
+			
 				
-		return sePuedeCrear;
 		
-		}
+		
 	
 	/**
 	 * Método que sirve para crear rocas, como limite tiene la constante NUM_ROCAS.
@@ -149,6 +158,75 @@ public class Juego {
 				numeroDinero ++;
 			}
 		}
+	}
+	
+	/**
+	 * método para eliminar un jugador, se le pasa una coordenada por parámetro y se elimina
+	 * tanto de la lista CoordenadaJugadores como del tablero indicando la coordenada especificada
+	 * por parámetro.
+	 * @param coordenada
+	 */
+	private void eliminarJugador (Coordenada coordenada) {
+		this.coordenadaJugadores.remove(coordenada);
+		this.tablero.remove(coordenada);
+	}
+	/**
+	 * método para saber cuando acaba el juego, el juego acabará cuando solo quede
+	 * un jugador o un jugador tenga todo el dinero del juego.
+	 * 
+	 * @return
+	 */
+	public boolean isTerminado() {
+		boolean termina = false;
+		boolean tieneTodoElDinero=false;
+		
+		//contemplamos en el tableto los elementos que son jugadores//
+		for(Element elemento : this.tablero.values()) {
+			if( elemento instanceof Jugador) {
+				//si el dinero del jugador es igual a nuestra constante que tiene un valor de 4, osea todo el dineri disponible.
+				if(((Jugador) elemento).getDinero()==Constantes.DINERO) {
+					tieneTodoElDinero=true;
+				}
+				//comprobamos que la cantidad de jugadores en el tablero es una, entonces acaba el juego.
+			}if(this.coordenadaJugadores.size()==1) {
+				termina=true;
+			//comprobamos que si un jugador tiene todo el dinero, termina la partida.
+			}if(tieneTodoElDinero=true) {
+				termina=true;
+			}
+		}
+		
+		//contemplamos que quede un jugador sobre el tablero o que un jugador tenga todo el dinero
+		
+		return termina;
+	}
+	
+	/**
+	 * método que imprime el nombre de los jugadores en el tablero y devuelve
+	 * una cadena con el nombre del jugador más el numero del 1 al 4 de que se trate.
+	 * @return
+	 */
+	public String imprimeNombreJugadores() {
+		StringBuilder nombreJugador= new StringBuilder();
+		Integer contadorJugadores=1;
+		for(Coordenada coordenada : this.coordenadaJugadores) {
+			Jugador jugador =(Jugador) tablero.get(coordenada);
+			nombreJugador.append(" El jugador "+ contadorJugadores+" se trata de un "+ jugador.getNombre()+"\n");
+			contadorJugadores++;
+		}
+		
+		return nombreJugador.toString();
+	}
+	public String imprimeValoresJugadores() {
+		StringBuilder nombreJugador= new StringBuilder();
+		Integer contadorJugadores=1;
+		for(Coordenada coordenada : this.coordenadaJugadores) {
+			Jugador jugador =(Jugador) tablero.get(coordenada);
+			nombreJugador.append(" El jugador "+ contadorJugadores+" tiene "+ jugador.getDinero()+ " dinero y un total de "+ jugador.getGemas()+" gemas acumuladas y un total de  "+jugador.getPociones()+ " Pociones"+"\n");
+			contadorJugadores++;
+		}
+		
+		return nombreJugador.toString();
 	}
 	
 	
