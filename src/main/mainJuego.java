@@ -15,7 +15,7 @@ public class mainJuego {
 
 	public static Scanner teclado = new Scanner(System.in);
 	
-	public static void main(String[] args) throws JugadorException {
+	public static void main(String[] args) throws JuegoException {
 		// TODO Auto-generated method stub
 		
 		try {

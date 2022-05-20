@@ -18,7 +18,7 @@ public class mainJuegoGUI {
 		// TODO Auto-generated method stub
 		try {
 			
-				
+			////////////////////////////////////////////				
 			ArrayList<PlayerType> jugadores = new ArrayList<>();
 			jugadores.add(PlayerType.ELFO);
 			jugadores.add(PlayerType.GUERRERO);
@@ -54,10 +54,6 @@ public class mainJuegoGUI {
 		}catch (JuegoException e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
-		
-	
 
 	}
 

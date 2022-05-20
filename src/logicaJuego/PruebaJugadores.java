@@ -15,5 +15,8 @@ public class PruebaJugadores {
 	System.out.println(juego1.getNombreJuegadorQueJuega());//ELFO
 	juego1.proximoJugador();//Cambia al jugador siguiente creado.
 	System.out.println(juego1.getNombreJuegadorQueJuega());//GUERRERO
+    juego1.setDado();
+    System.out.println(juego1.isTerminado());// tiene que devolver en este caso false.
+    juego1.proximoJugador();
 }
 }

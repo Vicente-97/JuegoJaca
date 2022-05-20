@@ -21,6 +21,7 @@ public class Juego {
 	 * Constructor Que crea un tablero y añade los jugadores en base a la constante, llamando al metodo crearJugadores.
 	 * @param personaje
 	 */
+	
 	public Juego(PlayerType[] personaje) {
 		super();
 		tablero = new HashMap<>();
@@ -33,12 +34,13 @@ public class Juego {
 			}		
 			
 		}
+	}
 		
 		//duda//
 		/*for(int i =0; i<Constantes.NUM_JUGADORES; i++) {
 			crearJugadores(personaje[i]);
 		}*/
-	}
+	
 	/**
 	 * Creo el tablero con los metodos creardinero, creargemas, crearpociones, crearrocas.
 	 * Todos los elementos menos los jugadores
@@ -73,11 +75,7 @@ public class Juego {
 				sePuedeCrear=true;
 			}
 			return sePuedeCrear;
-	}
-			
-				
-		
-		
+	}	
 	
 	/**
 	 * Método que sirve para crear rocas, como limite tiene la constante NUM_ROCAS.
@@ -177,28 +175,21 @@ public class Juego {
 	 * @return
 	 */
 	public boolean isTerminado() {
-		boolean termina = false;
-		boolean tieneTodoElDinero=false;
 		
-		//contemplamos en el tableto los elementos que son jugadores//
-		for(Element elemento : this.tablero.values()) {
-			if( elemento instanceof Jugador) {
-				//si el dinero del jugador es igual a nuestra constante que tiene un valor de 4, osea todo el dineri disponible.
-				if(((Jugador) elemento).getDinero()==Constantes.DINERO) {
-					tieneTodoElDinero=true;
+		boolean terminado = false;
+		boolean tieneTodoDinero = false;
+		
+		for (Element elemento : this.tablero.values()) {
+			if (elemento instanceof Jugador) {
+				if (((Jugador) elemento).getDinero() == Constantes.DINERO) {
+					tieneTodoDinero = true;
 				}
-				//comprobamos que la cantidad de jugadores en el tablero es una, entonces acaba el juego.
-			}if(this.coordenadaJugadores.size()==1) {
-				termina=true;
-			//comprobamos que si un jugador tiene todo el dinero, termina la partida.
-			}if(tieneTodoElDinero=true) {
-				termina=true;
 			}
 		}
-		
-		//contemplamos que quede un jugador sobre el tablero o que un jugador tenga todo el dinero
-		
-		return termina;
+		if (this.coordenadaJugadores.size() == 1 || tieneTodoDinero) {
+			terminado = true;
+		}
+		return terminado;
 	}
 	
 	/**
@@ -217,14 +208,20 @@ public class Juego {
 		
 		return nombreJugador.toString();
 	}
-	
+	/**
+	 * metodo que imprime, devuelve, los jugadores con sus
+	 *  valores de dinero, pociones y gemas.
+	 * @return
+	 */
 	public String imprimeValoreJugadores() {
 		StringBuilder nombreJugador= new StringBuilder();
 		Integer contadorJugadores=1;
 		for(Coordenada coordenada : this.coordenadaJugadores) {
 			Jugador jugador =(Jugador) tablero.get(coordenada);
+			if(jugador !=null) {
 			nombreJugador.append(" El jugador "+ contadorJugadores+" tiene "+ jugador.getDinero()+ " dinero y un total de "+ jugador.getGemas()+" gemas acumuladas y un total de  "+jugador.getPociones()+ " Pociones"+"\n");
 			contadorJugadores++;
+			}
 		}
 		
 		return nombreJugador.toString();
@@ -234,9 +231,9 @@ public class Juego {
 	 * comprobamos que sea un caracter valido.
 	 * Utilizamos en switch para llamar a los métodos de coordenada.
 	 */
-	private Coordenada getNextPosition(char direction) throws Exception {
+	private Coordenada getNextPosition(char direction) throws JuegoException {
 		Coordenada coordenada = this.coordenadaJugadores.get(jugadorJuega);
-		if (direction != 'N' || direction != 'S' || direction != 'E' || direction != 'O') {
+		if (direction != 'N' && direction != 'S' && direction != 'E' && direction != 'O') {
 			throw new JuegoException("Error, no es una coordenada valida");
 		} else {
 			switch (direction) {
@@ -258,7 +255,7 @@ public class Juego {
 				break;
 			}
 			default:
-				throw new Exception("Error");
+				throw new IllegalArgumentException("Error");
 			}
 		}
 		return coordenada;
@@ -273,8 +270,8 @@ public class Juego {
 	private void cambiaJugadorAPosicion(Coordenada coordenada) {
 		Coordenada coord = this.coordenadaJugadores.get(jugadorJuega);
 		
-		Jugador Jugador2 = (Jugador) this.tablero.get(coord);
-		tablero.put(coord, Jugador2);
+		Jugador jugador2 = (Jugador) this.tablero.get(coord);
+		tablero.put(coord, jugador2);
 		
 		
 		this.coordenadaJugadores.remove(coord);
@@ -282,7 +279,9 @@ public class Juego {
 		
 		
 	}
-	
+	/**
+	 * Actualiza la variable jugadorJuega al próximo jugador.
+	 */
 	public void proximoJugador() {
 		if (this.jugadorJuega == Constantes.NUM_JUGADORES - 1) {
 			this.jugadorJuega = 0;
@@ -292,6 +291,11 @@ public class Juego {
 		}
 	}
 	
+	/**
+	 * Devuelve la información del ganador si sólo hay jugador o si no, 
+	 * si hay alguien que tiene todo el dinero
+	 * @return
+	 */
 	public String getGanador() {
 		
 		StringBuilder St = new StringBuilder();
@@ -316,7 +320,10 @@ public class Juego {
 		return St.toString();
 	}
 	
-	
+	/**
+	 * metodo que te devuelve el nombre del tipo de jugador que juega.
+	 * @return
+	 */
 	public String getNombreJuegadorQueJuega() {
 		
 		StringBuilder St = new StringBuilder();
@@ -330,16 +337,48 @@ public class Juego {
 		
 		return St.toString();
 	}
+	/**
+	 * Asinga valor del dado con los movimientos para el jugador que juega le ha salido
+	 */
+	public void setDado() {
+		
+		Coordenada coordenada =this.coordenadaJugadores.get(jugadorJuega);
+			
+		Jugador jugador=(Jugador) this.tablero.get(coordenada);
+		//llamamos al get fuerza para luchar para saber el numero al que se limitará su fuerza.
+		this.dado = jugador.getFuerzaParaLuchar();
+	}
+	/**
+	 * devuelve el valor del dado
+	 * @return
+	 */
+	public int getValorDado() {
+		return dado;
+	}
+	/**
+	 * decrementa el dado.
+	 * @return
+	 */
+	public int decrementaDado() {
+		return this.dado--;
+	}
 	
-	
-	
+	/**
+	 * Devuelve el elemento que está en la coordenada coord.
+	 * @param coord
+	 * @return
+	 */
 	public Element obtenerElementoTablero(Coordenada coord) {
 		return this.tablero.get(coord);
 	}
-	
+	/**
+	 * obtiene la coordenada del jugador que está jugando actualmente
+	 * @return
+	 */
 	public Coordenada obtenerCoordenadaJugadorJuega() {
 		return this.coordenadaJugadores.get(jugadorJuega);
 	}
+	
 	
 	
 	
@@ -397,7 +436,7 @@ public class Juego {
 	 * @return
 	 * @throws Exception 
 	 */
-	public String movePlayer(char direction) throws Exception {
+	public String movePlayer(char direction) throws JuegoException {
 		// Si no es una direcciÃ³n vÃ¡lida, mando un exception
 		String resul = "";
 		Jugador jugador = (Jugador) this.tablero.get(this.coordenadaJugadores.get(jugadorJuega));
