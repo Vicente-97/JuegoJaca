@@ -217,7 +217,8 @@ public class Juego {
 		
 		return nombreJugador.toString();
 	}
-	public String imprimeValoresJugadores() {
+	
+	public String imprimeValoreJugadores() {
 		StringBuilder nombreJugador= new StringBuilder();
 		Integer contadorJugadores=1;
 		for(Coordenada coordenada : this.coordenadaJugadores) {
@@ -227,6 +228,117 @@ public class Juego {
 		}
 		
 		return nombreJugador.toString();
+	}
+	/**
+	 * método para mover al jugador, recibe un caracter que será la direccion, Norte, Sur, Este o Oeste,
+	 * comprobamos que sea un caracter valido.
+	 * Utilizamos en switch para llamar a los métodos de coordenada.
+	 */
+	private Coordenada getNextPosition(char direction) throws Exception {
+		Coordenada coordenada = this.coordenadaJugadores.get(jugadorJuega);
+		if (direction != 'N' || direction != 'S' || direction != 'E' || direction != 'O') {
+			throw new JuegoException("Error, no es una coordenada valida");
+		} else {
+			switch (direction) {
+			case 'N': {
+				coordenada.goUp();
+				break;
+			}
+			case 'S': {
+				coordenada.goDown();
+				break;
+			}
+			case 'E': {
+				
+				coordenada.goRight();
+				break;
+			}
+			case 'O': {
+				coordenada.goLeft();
+				break;
+			}
+			default:
+				throw new Exception("Error");
+			}
+		}
+		return coordenada;
+	}
+	
+	/**
+	 * método para cambiar la posicion de un Jugador, se le pasa una coordenada y se crea otra con el valor
+	 * de la lista de jugadores, el atributo jugador juega. Se crea un jugador 2 que se le asigna la coordenada
+	 * se inserta en tablero la coordenada y el nuevo jugador y se borra y actualiza en  la lista Jugadores.
+	 * @param coordenada
+	 */
+	private void cambiaJugadorAPosicion(Coordenada coordenada) {
+		Coordenada coord = this.coordenadaJugadores.get(jugadorJuega);
+		
+		Jugador Jugador2 = (Jugador) this.tablero.get(coord);
+		tablero.put(coord, Jugador2);
+		
+		
+		this.coordenadaJugadores.remove(coord);
+		this.coordenadaJugadores.add(jugadorJuega, coord);
+		
+		
+	}
+	
+	public void proximoJugador() {
+		if (this.jugadorJuega == Constantes.NUM_JUGADORES - 1) {
+			this.jugadorJuega = 0;
+			
+		} else {
+			jugadorJuega++;
+		}
+	}
+	
+	public String getGanador() {
+		
+		StringBuilder St = new StringBuilder();
+		if (this.coordenadaJugadores.size() == 1) {
+			
+			Jugador jugador2 = (Jugador) tablero.get(coordenadaJugadores.get(jugadorJuega));
+			St.append(jugador2.toString());
+			
+		} else {
+			
+			for (Element siguiente : tablero.values()) {
+				
+				if (siguiente instanceof Jugador) {
+					
+					Jugador jugador2 = ((Jugador) siguiente);
+					if (jugador2.getDinero() == Constantes.NUM_DINERO) {
+						St.append(jugador2);
+					}
+				}
+			}
+		}
+		return St.toString();
+	}
+	
+	
+	public String getNombreJuegadorQueJuega() {
+		
+		StringBuilder St = new StringBuilder();
+		
+		
+		Coordenada coordenada = this.coordenadaJugadores.get(jugadorJuega);
+		
+		Jugador jugador2 = (Jugador) this.tablero.get(coordenada);
+		
+		St.append(jugador2.getNombre());
+		
+		return St.toString();
+	}
+	
+	
+	
+	public Element obtenerElementoTablero(Coordenada coord) {
+		return this.tablero.get(coord);
+	}
+	
+	public Coordenada obtenerCoordenadaJugadorJuega() {
+		return this.coordenadaJugadores.get(jugadorJuega);
 	}
 	
 	
@@ -283,10 +395,9 @@ public class Juego {
 	 * 
 	 * @param direction
 	 * @return
-	 * @throws JuegoException
-	 * @throws JugadorException
+	 * @throws Exception 
 	 */
-	public String movePlayer(char direction) throws JuegoException, JugadorException {
+	public String movePlayer(char direction) throws Exception {
 		// Si no es una direcciÃ³n vÃ¡lida, mando un exception
 		String resul = "";
 		Jugador jugador = (Jugador) this.tablero.get(this.coordenadaJugadores.get(jugadorJuega));
