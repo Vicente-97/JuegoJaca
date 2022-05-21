@@ -4,109 +4,102 @@ import java.util.Random;
 
 import logicaJuego.Constantes;
 
-public class Jugador extends Element {
-	
-	private int dinero;
-	private int pociones;
-	private int gemas;
-	private PlayerType jugadores;
-	Random random = new Random();
+public class Jugador extends Element{
+//ATRIBUTOS
+private int dinero;
+private int pociones;
+private int gemas;
+private PlayerType jugador;
+Random random = new Random();
 
-	public Jugador(PlayerType jugadores) {
-		super(ElementType.valueOf(jugadores.name()));
-		this.jugadores = jugadores;
-		this.dinero = 0;
-		this.gemas = 0;
-		this.pociones = 0;
-	}
+//CONTRUCTOR
+public Jugador(PlayerType jugador) {
+super(ElementType.valueOf(jugador.name()));
+this.jugador = jugador;
+this.dinero = 0;
+this.gemas = 0;
+this.pociones = 0;
+}
 
-	
-	public String getNombre() {
-		return jugadores.name();
-	}
 
-	private int getFuerza() {
-		return jugadores.getFuerza();
-	}
 
-	public int getFuerzaParaLuchar() {
-		return random.nextInt(getFuerza());
-	}
+//GETTERS AND SETTERS
+public String getNombre() {
+return jugador.name();
+}
 
-	private int getMagia() {
-		return jugadores.getMagia();
-	}
+private int getFuerza() {
+return jugador.getFuerza();
+}
 
-	public int getMagiaParaLuchar() {
-		return random.nextInt(getMagia());
-	}
+public int getFuerzaParaLuchar() {
+return random.nextInt(getFuerza());
+}
 
-	private int getVelocidad() {
-		return jugadores.getVelocidad();
-	}
+private int getMagia() {
+return jugador.getMagia();
+}
 
-	public int getVelocidadParaLuchar() {
-		return random.nextInt(getVelocidad());
-	}
+public int getMagiaParaLuchar() {
+return random.nextInt(getMagia());
+}
 
-	public int getDinero() {
-		return dinero;
-	}
+private int getVelocidad() {
+return jugador.getVelocidad();
+}
 
-	public void setDinero(int dinero) throws JugadorException {
-		
-		if (dinero < 0) {
-			
-			throw new JugadorException("Error de juego, el dinero no puede ser menor que 0");
-			
-		} else {
-			this.dinero = dinero;
-		}
-	}
+public int getVelocidadParaLuchar() {
+return random.nextInt(getVelocidad());
+}
 
-	public int getPociones() {
-		return pociones;
-	}
+public int getDinero() {
+return dinero;
+}
 
-	public void setPociones(int pociones) throws JugadorException {
-		
-		if (pociones < 0) {
-			
-			throw new JugadorException("Error del juego, Las pociones no pueden ser negativas");
-			
-		} else {
-			this.pociones = pociones;
-		}
-	}
+public void setDinero(int dinero) throws JugadorException {
+if (dinero < 0) {
+throw new JugadorException("Error. El dinero  no puede ser menor de 0");
+} else {
+this.dinero = dinero;
+}
+}
 
-	public int getGemas() {
-		return gemas;
-	}
+public int getPociones() {
+return pociones;
+}
 
-	public void setGemas(int gemas) throws JugadorException {
-		
-		if (gemas < 0) {
-			
-			throw new JugadorException("Error, Las gemas no pueden ser negativas");
-			
-		} else {
-			this.gemas = gemas;
-		}
+public void setPociones(int pociones) throws JugadorException {
+if (pociones < 0) {
+throw new JugadorException("Error. Las pociones no pueden ser negativas");
+} else {
+this.pociones = pociones;
+}
+}
 
-	}
+public int getGemas() {
+return gemas;
+}
 
-	public String resumen() {
-		
-		return "Nombre: " + this.getNombre() 
-		+ " Gemas: " + this.getGemas() 
-		+ " Dinero: " + this.getDinero()
-		+ "Pociones: " + this.getPociones();
-	}
+public void setGemas(int gemas) throws JugadorException {
+if (gemas < 0) {
+throw new JugadorException("Error. No pueden ser negativas");
+} else {
+this.gemas = gemas;
+}
 
-	
+}
+
+public String resumen() {
+return "Nombre: " + this.getNombre()
++ " Gemas : " + this.getGemas()
++ " Dinero: " + this.getDinero()
++ "Pociones: " + this.getPociones();
+}
+
 	public PlayerType getPlayer() {
-		return jugadores;
+		return jugador;
 	}
+
 	//encuentra dinero al moverse//
 	public void encuentraDinero() {
 		this.dinero++;

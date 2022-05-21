@@ -130,7 +130,7 @@ public boolean goDown() {
 	return se_mueve;
 }
 @Override
-protected Coordenada clone() throws CloneNotSupportedException {
+public Coordenada clone() throws CloneNotSupportedException {
 	return new Coordenada(this.x,this.y);
 }
 
