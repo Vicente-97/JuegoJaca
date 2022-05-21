@@ -6,94 +6,94 @@ import logicaJuego.Constantes;
 
 public class Jugador extends Element{
 //ATRIBUTOS
-private int dinero;
-private int pociones;
-private int gemas;
-private PlayerType jugador;
+	private int dinero;
+	private int pociones;
+	private int gemas;
+	private PlayerType jugador;
 Random random = new Random();
 
 //CONTRUCTOR
 public Jugador(PlayerType jugador) {
-super(ElementType.valueOf(jugador.name()));
-this.jugador = jugador;
-this.dinero = 0;
-this.gemas = 0;
-this.pociones = 0;
+	super(ElementType.valueOf(jugador.name()));
+	this.jugador = jugador;
+	this.dinero = 0;
+	this.gemas = 0;
+	this.pociones = 0;
 }
 
 
 
 //GETTERS AND SETTERS
 public String getNombre() {
-return jugador.name();
+	return jugador.name();
 }
 
 private int getFuerza() {
-return jugador.getFuerza();
+	return jugador.getFuerza();
 }
 
 public int getFuerzaParaLuchar() {
-return random.nextInt(getFuerza());
+	return random.nextInt(getFuerza());
 }
 
 private int getMagia() {
-return jugador.getMagia();
+	return jugador.getMagia();
 }
 
 public int getMagiaParaLuchar() {
-return random.nextInt(getMagia());
+	return random.nextInt(getMagia());
 }
 
 private int getVelocidad() {
-return jugador.getVelocidad();
+	return jugador.getVelocidad();
 }
 
 public int getVelocidadParaLuchar() {
-return random.nextInt(getVelocidad());
+	return random.nextInt(getVelocidad());
 }
 
 public int getDinero() {
-return dinero;
+	return dinero;
 }
 
 public void setDinero(int dinero) throws JugadorException {
-if (dinero < 0) {
-throw new JugadorException("Error. El dinero  no puede ser menor de 0");
+	if (dinero < 0) {
+		throw new JugadorException("Error. El dinero  no puede ser menor de 0");
 } else {
-this.dinero = dinero;
-}
+	this.dinero = dinero;
+	}
 }
 
 public int getPociones() {
-return pociones;
+	return pociones;
 }
 
 public void setPociones(int pociones) throws JugadorException {
-if (pociones < 0) {
-throw new JugadorException("Error. Las pociones no pueden ser negativas");
+	if (pociones < 0) {
+		throw new JugadorException("Error. Las pociones no pueden ser negativas");
 } else {
-this.pociones = pociones;
-}
+	this.pociones = pociones;
+	}
 }
 
 public int getGemas() {
-return gemas;
+	return gemas;
 }
 
 public void setGemas(int gemas) throws JugadorException {
-if (gemas < 0) {
-throw new JugadorException("Error. No pueden ser negativas");
+	if (gemas < 0) {
+		throw new JugadorException("Error. No pueden ser negativas");
 } else {
-this.gemas = gemas;
-}
+	this.gemas = gemas;
+	}
 
 }
 
 public String resumen() {
-return "Nombre: " + this.getNombre()
-+ " Gemas : " + this.getGemas()
-+ " Dinero: " + this.getDinero()
-+ "Pociones: " + this.getPociones();
+	return "Nombre: " + this.getNombre()
+	+ " Gemas : " + this.getGemas()
+	+ " Dinero: " + this.getDinero()
+	+ "Pociones: " + this.getPociones();
 }
 
 	public PlayerType getPlayer() {
