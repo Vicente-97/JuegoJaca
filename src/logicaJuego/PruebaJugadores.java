@@ -18,5 +18,11 @@ public class PruebaJugadores {
     juego1.setDado();
     System.out.println(juego1.isTerminado());// tiene que devolver en este caso false.
     juego1.proximoJugador();
+    Jugador j1 = new Jugador(PlayerType.ELFO);
+   // j1.encuentraDinero();
+    //j1.encuentraGema();
+   // j1.encuentraPocion();
+    System.out.println(j1.resumen());
+    juego1.getGanador();
 }
 }

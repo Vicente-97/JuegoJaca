@@ -90,12 +90,11 @@ public void setGemas(int gemas) throws JugadorException {
 }
 
 public String resumen() {
-	return "Nombre: " + this.getNombre()
-	+ " Gemas : " + this.getGemas()
-	+ " Dinero: " + this.getDinero()
-	+ "Pociones: " + this.getPociones();
+    return "Nombre: " + this.getNombre()
+            + " Gemas: " + this.getGemas() 
+            + " Dinero: " + this.getDinero()
+            + " Pociones: " + this.getPociones();
 }
-
 	public PlayerType getPlayer() {
 		return jugador;
 	}

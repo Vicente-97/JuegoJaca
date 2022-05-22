@@ -342,14 +342,16 @@ public class Juego {
 	public String getGanador() {
 		StringBuilder resultado = new StringBuilder();
 		if (this.coordenadaJugadores.size() == 1) {
-			Jugador aux = (Jugador) tablero.get(coordenadaJugadores.get(jugadorJuega));
-			resultado.append(aux.toString());
+			Jugador jugador = (Jugador) tablero.get(coordenadaJugadores.get(jugadorJuega));
+			resultado.append(jugador.toString());
+			
 		} else {
+			
 			for (Element siguiente : tablero.values()) {
 				if (siguiente instanceof Jugador) {
-					Jugador aux = ((Jugador) siguiente);
-					if (aux.getDinero() == Constantes.NUM_DINERO) {
-						resultado.append(aux);
+					Jugador jugador = ((Jugador) siguiente);
+					if (jugador.getDinero() == Constantes.NUM_DINERO) {
+						resultado.append(jugador);
 					}
 				}
 			}
