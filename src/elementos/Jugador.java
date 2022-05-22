@@ -145,6 +145,8 @@ public String resumen() {
 				jugadorContrario.dinero=0;
 				resultadoFinal=Constantes.GANA_DINERO;//gana el dinero del contrario y gana el jugador//
 				
+			}else {
+				resultadoFinal= Constantes.GANA_MUERE;
 			}
 			//supuestos de casos en los que nosotros perderiamos.
 		}else {

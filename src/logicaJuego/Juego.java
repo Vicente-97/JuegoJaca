@@ -28,7 +28,7 @@ public class Juego {
 		tablero = new HashMap<>();
 		crearTablero();
 		while(contador<Constantes.NUM_JUGADORES) {
-			if(crearJugador(personaje[contador])==true) {
+			if(crearJugador(personaje[contador])) {
 				contador++;
 			}
 		}
