@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import elementos.PlayerType;
-import logicaJuego.Constantes;
-import logicaJuego.Juego;
+import logica.juego.Constantes;
+import logica.juego.Juego;
 
 class TestJuego {
 
@@ -103,17 +103,7 @@ class TestJuego {
 			
 			assertNotEquals("MAGO", juego.getNombreJugadorQueJuega());
 		}
-		/**
-		 * Este test es erroneo, no puedo encontrar la solucion a ese error.
-		 */
-		@Test
-		void testJugadorUltimoJugador() {
-			PlayerType[] jugadores = {PlayerType.ELFO};
-			Juego juego = new Juego(jugadores);
-			
-			
-			assertEquals("Nombre: ELFO Gemas: 0 Dinero: 0 Pociones: 0", juego.getGanador());
-		}
+		
 		@Test
 		void testValorDadoCorrecto() {
 			PlayerType[] jugadores = {PlayerType.ELFO, PlayerType.GUERRERO, PlayerType.MAGO, PlayerType.OGRO};

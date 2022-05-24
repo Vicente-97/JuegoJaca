@@ -1,4 +1,4 @@
-package logicaJuego;
+package logica.juego;
 
 import elementos.Jugador;
 import elementos.PlayerType;

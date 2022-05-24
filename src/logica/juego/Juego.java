@@ -1,4 +1,4 @@
-package logicaJuego;
+package logica.juego;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -327,7 +327,7 @@ public class Juego {
 	 * Actualiza la variable jugadorJuega al próximo jugador.
 	 */
 	public void proximoJugador() {
-		if (this.jugadorJuega == Constantes.NUM_JUGADORES - 1) {
+		if (this.jugadorJuega == coordenadaJugadores.size() - 1) {
 			this.jugadorJuega = 0;
 		} else {
 			jugadorJuega++;
@@ -342,7 +342,7 @@ public class Juego {
 	public String getGanador() {
 		StringBuilder resultado = new StringBuilder();
 		if (this.coordenadaJugadores.size() == 1) {
-			Jugador jugador = (Jugador) tablero.get(coordenadaJugadores.get(jugadorJuega));
+			Jugador jugador = (Jugador) tablero.get(coordenadaJugadores.get(0));
 			resultado.append(jugador.toString());
 			
 		} else {
